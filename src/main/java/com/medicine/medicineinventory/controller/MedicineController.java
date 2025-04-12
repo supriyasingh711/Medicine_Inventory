@@ -1,8 +1,10 @@
 package com.medicine.medicineinventory.controller;
 
 
+import com.medicine.medicineinventory.dto.UpdateMedicineRequest;
 import com.medicine.medicineinventory.entity.Medicine;
 import com.medicine.medicineinventory.service.MedicineService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,5 +39,10 @@ public class MedicineController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id){
         medicineService.deleteMedicine(id);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateMedicine(@PathVariable Long id, @Valid @RequestBody UpdateMedicineRequest request){
+        Medicine updatedMedicine= medicineService.updateMedicine(id,request);
+        return  ResponseEntity.ok(updatedMedicine);
     }
 }
