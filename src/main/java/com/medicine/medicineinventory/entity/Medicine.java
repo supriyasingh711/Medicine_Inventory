@@ -81,4 +81,12 @@ public class Medicine {
     public void setExpiryDate(LocalDate expiryDate) {
         this.expiryDate = expiryDate;
     }
+
+    public Medicine(String name, String batchNumber, Integer quantity, Double price, LocalDate expiryDate) {
+        this.name = name;
+        this.batchNumber = batchNumber;
+        this.quantity = quantity;
+        this.price = price;
+        this.expiryDate = expiryDate;
+    }
 }
