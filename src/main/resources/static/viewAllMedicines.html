@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Medicines</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<h1>All Medicines</h1>
+<table id="medicineTable">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Batch Number</th>
+        <th>Expiry Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Rows will be inserted here dynamically -->
+    </tbody>
+</table>
+
+<script>
+    window.onload = function () {
+        fetch('/api/medicine') // Make sure this path matches your backend controller
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector('#medicineTable tbody');
+                data.forEach(medicine => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${medicine.id}</td>
+                        <td>${medicine.name}</td>
+                        <td>${medicine.price}</td>
+                        <td>${medicine.quantity}</td>
+                        <td>${medicine.batchNumber}</td>
+                        <td>${medicine.expiryDate}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching medicine data:', error);
+            });
+    }
+</script>
+</body>
+</html>

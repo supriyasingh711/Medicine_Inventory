@@ -6,6 +6,7 @@ import com.medicine.medicineinventory.entity.Medicine;
 import com.medicine.medicineinventory.repository.MedicineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.kafka.core.KafkaTemplate;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -16,6 +17,9 @@ import java.util.Optional;
 public class MedicineService {
     @Autowired
     private MedicineRepository medicineRepository;
+
+    @Autowired
+    private  KafkaTemplate<String,String> kafkaTemplate;
 
     public List<Medicine> getAllMedicine(){
         return medicineRepository.findAll();
@@ -39,9 +43,17 @@ public class MedicineService {
         medicine.setQuantity(request.getQuantity());
         medicine.setPrice(request.getPrice());
         medicine.setExpiryDate(request.getExpiryDate());
+        medicine.setBatchNumber(request.getBatchNumber());
         medicine.setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
-
+     updateStock(medicine);
         return medicineRepository.save(medicine);
+    }
+
+    private void updateStock(Medicine medicine) {
+        if(medicine.getQuantity()<medicine.getMinThreshold()){
+            String alertMesssage="Restock Alert :"+medicine.getName()+"{Qty :"+medicine.getQuantity()+"}";
+            kafkaTemplate.send("restock-alerts",alertMesssage);
+        }
     }
 
 }

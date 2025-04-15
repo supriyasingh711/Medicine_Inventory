@@ -29,6 +29,15 @@ public class Medicine {
     @JsonProperty
     private String name;
 
+    public int getMinThreshold() {
+        return minThreshold;
+    }
+
+    private int minThreshold=5;
+
+    public Medicine() {
+    }
+
     @Column(name="batch_number")
     @JsonProperty
     private String batchNumber;
@@ -41,6 +50,10 @@ public class Medicine {
 
     public Double getPrice() {
         return price;
+    }
+
+    public String getBatchNumber() {
+        return batchNumber;
     }
 
     public void setPrice(Double price) {
@@ -70,12 +83,20 @@ public class Medicine {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setBatchNumber(String batchNumber) {
         this.batchNumber = batchNumber;
     }
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
     }
 
     public void setExpiryDate(LocalDate expiryDate) {

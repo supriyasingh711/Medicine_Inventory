@@ -6,6 +6,7 @@ import com.medicine.medicineinventory.entity.Medicine;
 import com.medicine.medicineinventory.service.MedicineService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,11 +19,16 @@ public class MedicineController {
     @Autowired
     public MedicineService medicineService;
 
+    @GetMapping("/")
+    public String showHome(){
+        return "index";
+    }
     @GetMapping
-    public List<Medicine> getAll(){
+    public ResponseEntity<List<Medicine>> getAll(){
         List<Medicine> medicines = medicineService.getAllMedicine();
-        System.out.println("Fetched Medicines: " + medicines.size());
-        return medicineService.getAllMedicine();
+//        System.out.println("Fetched Medicines: " + medicines.size());
+        List<Medicine> medicines1=medicineService.getAllMedicine();
+        return new ResponseEntity<>(medicines1, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

@@ -2,25 +2,64 @@ package com.medicine.medicineinventory.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 public class SecurityConfig {
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws  Exception{
-       return  http
-                .authorizeHttpRequests(auth->auth
-                        .anyRequest().authenticated())
-                .httpBasic(withDefaults())
 
-                .csrf(csrf->csrf.disable())
+    @Bean
+    public InMemoryUserDetailsManager userDetailsManager() {
+        UserDetails staff = User.builder()
+                .username("staff")
+                .password("{noop}test123")
+                .roles("STAFF")
                 .build();
+
+        UserDetails pharmacist = User.builder()
+                .username("pharmacist")
+
+                .password("{noop}test123")
+                .roles("PHARMACIST")
+                .build();
+
+        UserDetails admin = User.builder()
+                .username("admin")
+                .password("{noop}test123")
+                .roles("ADMIN")
+                .build();
+
+        return new InMemoryUserDetailsManager(staff, pharmacist, admin);
     }
-    private static  org.springframework.security.config.Customizer<org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer<HttpSecurity>> withDefaults(){
-        return org.springframework.security.config.Customizer.withDefaults();
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(configurer -> configurer
+                        // Public pages (login etc.)
+                        .requestMatchers("/showMyLoginPage", "/css/**", "/js/**").permitAll()
+
+                        // Admin access
+                        .requestMatchers("/medicines/delete/**", "/admin/**").hasRole("ADMIN")
+
+                        // Pharmacist + Admin access
+                        .requestMatchers("/medicines/add", "/medicines/update/**", "/medicines/restock", "/stock/**").hasAnyRole("PHARMACIST", "ADMIN")
+
+                        // All roles (including STAFF) can view list/dashboard
+                        .requestMatchers("/medicine", "/dashboard").hasAnyRole("STAFF", "PHARMACIST", "ADMIN")
+
+                        // Any other request requires authentication
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                        .loginPage("/showMyLoginPage")
+                        .loginProcessingUrl("/authenticateTheUser")
+                        .permitAll()
+                )
+                .logout(logout -> logout.permitAll());
+
+        return http.build();
     }
 }
