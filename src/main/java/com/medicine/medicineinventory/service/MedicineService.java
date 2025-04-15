@@ -127,6 +127,7 @@ public class MedicineService {
 	    	Medicine medicine = med.get();
 	    	
 	    	medicine.setName(request.getName());
+	    	medicine.setBatchNumber(request.getBatchNumber());
 	        medicine.setQuantity(request.getQuantity());
 	        medicine.setPrice(request.getPrice());
 	        medicine.setExpiryDate(request.getExpiryDate());

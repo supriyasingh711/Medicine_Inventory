@@ -11,6 +11,9 @@ public class UpdateMedicineRequest {
 
     @NotBlank(message = "Name cannot be empty")
     private String name;
+    
+    @NotBlank(message = "Batch Number cannot be empty")
+    private String batchNumber;
 
     @Min(value=1,message="Quantity must be atleast 1")
     private int quantity;
@@ -26,6 +29,14 @@ public class UpdateMedicineRequest {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public  String getBatchNumber() {
+        return batchNumber;
+    }
+
+    public void setBatchNumber(String batchNumber) {
+        this.batchNumber = batchNumber;
     }
 
     public int getQuantity() {
