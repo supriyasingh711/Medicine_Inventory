@@ -110,4 +110,6 @@ public class Medicine {
         this.price = price;
         this.expiryDate = expiryDate;
     }
+    
+    public Medicine() {}
 }
