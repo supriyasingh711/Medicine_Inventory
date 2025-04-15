@@ -44,6 +44,7 @@
         <h3>Medicine Details</h3>
         <p><strong>ID:</strong> <span id="idDisplay"></span></p>
         <p><strong>Name:</strong> <span id="nameDisplay"></span></p>
+        <p><strong>Batch No.:</strong> <span id="batchNumberDisplay"></span></p>
         <!-- <p><strong>Description:</strong> <span id="descDisplay"></span></p> -->
         <p><strong>Quantity:</strong> <span id="qtyDisplay"></span></p>
         <p><strong>Price:</strong> <span id="priceDisplay"></span></p>
@@ -69,6 +70,7 @@
                 const medicine = await response.json();
                 document.getElementById('idDisplay').textContent = medicine.id;
                 document.getElementById('nameDisplay').textContent = medicine.name;
+                document.getElementById('batchNumberDisplay').textContent = medicine.batchNumber;
                 //document.getElementById('descDisplay').textContent = medicine.description || "N/A";
                 document.getElementById('qtyDisplay').textContent = medicine.quantity;
                 document.getElementById('priceDisplay').textContent = medicine.price.toFixed(2);
@@ -95,6 +97,7 @@
                     document.getElementById('responseMessage').textContent = "Medicine deleted successfully.";
                     document.getElementById('medicineDetails').style.display = 'none';
                     document.getElementById('medicineId').value = '';
+                    console.log(response);
                 } else {
                     document.getElementById('responseMessage').textContent = "Failed to delete medicine.";
                 }

@@ -19,30 +19,33 @@ public class MedicineController {
     public MedicineService medicineService;
 
     @GetMapping
-    public List<Medicine> getAll(){
-        List<Medicine> medicines = medicineService.getAllMedicine();
-        System.out.println("Fetched Medicines: " + medicines.size());
+    public Object getAll(){
+//        List<Medicine> medicines = medicineService.getAllMedicine();
+//        System.out.println("Fetched Medicines: " + medicines.size());
         return medicineService.getAllMedicine();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Medicine> getMedicineById(@PathVariable Long id){
-        Optional<Medicine> m=medicineService.getMedicineById(id);
-        return m.map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
+    public Object getMedicineById(@PathVariable Long id){
+//        Optional<Medicine> m=medicineService.getMedicineById(id);
+//        return m.map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
+    	return medicineService.getMedicineById(id);
     }
 
     @PostMapping
-    public Medicine add(@RequestBody Medicine medicine){
-        return medicineService.addMedicine(medicine);
+    public Object add(@RequestBody Medicine medicine){
+//        return medicineService.addMedicine(medicine);
+    	return medicineService.addMedicine(medicine);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id){
-        medicineService.deleteMedicine(id);
+    public Object delete(@PathVariable Long id){
+//        medicineService.deleteMedicine(id);
+    	return medicineService.deleteMedicine(id);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateMedicine(@PathVariable Long id, @Valid @RequestBody UpdateMedicineRequest request){
-        Medicine updatedMedicine= medicineService.updateMedicine(id,request);
-        return  ResponseEntity.ok(updatedMedicine);
+    public Object updateMedicine(@PathVariable Long id, @Valid @RequestBody UpdateMedicineRequest request){
+//        Medicine updatedMedicine= medicineService.updateMedicine(id,request);
+    	return medicineService.updateMedicine(id, request);
     }
 }

@@ -39,22 +39,6 @@ public class Medicine {
     @JsonProperty
     private Double price;
 
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Timestamp updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     @Column(name = "expiry_date")
     @JsonProperty
     private LocalDate expiryDate;
@@ -66,23 +50,71 @@ public class Medicine {
     @LastModifiedDate
     private Timestamp updatedAt;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public Long getId() {
+		return id;
+	}
 
-    public void setBatchNumber(String batchNumber) {
-        this.batchNumber = batchNumber;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setExpiryDate(LocalDate expiryDate) {
-        this.expiryDate = expiryDate;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public Medicine(String name, String batchNumber, Integer quantity, Double price, LocalDate expiryDate) {
+	public String getBatchNumber() {
+		return batchNumber;
+	}
+
+	public void setBatchNumber(String batchNumber) {
+		this.batchNumber = batchNumber;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public LocalDate getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(LocalDate expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
+	public Timestamp getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Timestamp createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Timestamp getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Timestamp updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public Medicine(String name, String batchNumber, Integer quantity, Double price, LocalDate expiryDate) {
         this.name = name;
         this.batchNumber = batchNumber;
         this.quantity = quantity;

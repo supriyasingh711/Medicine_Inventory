@@ -19,6 +19,12 @@
             padding: 8px;
             margin-top: 5px;
         }
+        #medicineDetails {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            display: none;
+        }
         button {
             margin-top: 15px;
             padding: 10px 15px;
@@ -30,6 +36,9 @@
     <form id="medicineForm">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required>
+        
+        <label for="batchNumber">Batch No.:</label>
+        <input type="text" id="batchNumber" name="batchNumber" required>
 
 		<!-- 
         <label for="description">Description:</label>
@@ -53,7 +62,7 @@
 
             const medicineData = {
                 name: document.getElementById('name').value,
-                
+                batchNumber: document.getElementById('batchNumber').value,
                 quantity: parseInt(document.getElementById('quantity').value),
                 price: parseFloat(document.getElementById('price').value)
             };
@@ -71,6 +80,7 @@
 
                 if (response.ok) {
                     document.getElementById('responseMessage').textContent = "Medicine added successfully!";
+                    console.log(response);
                     document.getElementById('medicineForm').reset();
                 } else {
                     document.getElementById('responseMessage').textContent = "Failed to add medicine.";
@@ -79,6 +89,7 @@
                 document.getElementById('responseMessage').textContent = "Error: " + error.message;
             }
         });
+        
     </script>
 </body>
 </html>

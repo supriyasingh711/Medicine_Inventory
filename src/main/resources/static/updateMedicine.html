@@ -45,6 +45,9 @@
         <form id="updateForm">
             <label for="name">Name:</label>
             <input type="text" id="name" required>
+            
+	        <label for="batchNumber">Name:</label>
+	        <input type="text" id="batchNumber" name="batchNumber" required>
 			
 			<!-- 
             <label for="description">Description:</label>
@@ -81,6 +84,7 @@
                 const medicine = await res.json();
 
                 document.getElementById('name').value = medicine.name;
+                document.getElementById('batchNumber').value = medicine.batchNumber,
                 //document.getElementById('description').value = medicine.description || '';
                 document.getElementById('quantity').value = medicine.quantity;
                 document.getElementById('price').value = medicine.price;
@@ -100,7 +104,7 @@
 
             const updatedData = {
                 name: document.getElementById('name').value,
-                
+                batchNumber: document.getElementById('batchNumber').value,
                 quantity: parseInt(document.getElementById('quantity').value),
                 price: parseFloat(document.getElementById('price').value)
             };
@@ -118,6 +122,7 @@
 
                 if (res.ok) {
                     document.getElementById('responseMessage').textContent = "Medicine updated successfully!";
+                    console.log(res);
                 } else {
                     const error = await res.text();
                     document.getElementById('responseMessage').textContent = "Update failed: " + error;
