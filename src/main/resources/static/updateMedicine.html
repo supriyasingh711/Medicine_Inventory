@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Medicine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 15px;
+        }
+        #medicineDetails {
+            display: none;
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+            padding-top: 15px;
+        }
+        #responseMessage {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Update Medicine</h2>
+
+    <label for="medicineId">Enter Medicine ID:</label>
+    <input type="number" id="medicineId" required>
+    <button onclick="fetchMedicine()">Fetch Medicine</button>
+
+    <div id="medicineDetails">
+        <form id="updateForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
+			
+			<!-- 
+            <label for="description">Description:</label>
+            <textarea id="description" rows="4"></textarea>
+             -->
+
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" required min="0">
+
+            <label for="price">Price:</label>
+            <input type="number" id="price" required step="0.01" min="0">
+
+            <button type="submit">Update Medicine</button>
+        </form>
+    </div>
+
+    <p id="responseMessage"></p>
+
+    <script>
+        async function fetchMedicine() {
+            const id = document.getElementById('medicineId').value;
+
+            if (!id) {
+                alert("Please enter a medicine ID.");
+                return;
+            }
+
+            try {
+                const res = await fetch(`/api/medicine/${id}`);
+                if (!res.ok) {
+                    throw new Error("Medicine not found");
+                }
+
+                const medicine = await res.json();
+
+                document.getElementById('name').value = medicine.name;
+                //document.getElementById('description').value = medicine.description || '';
+                document.getElementById('quantity').value = medicine.quantity;
+                document.getElementById('price').value = medicine.price;
+
+                document.getElementById('medicineDetails').style.display = 'block';
+                document.getElementById('responseMessage').textContent = '';
+            } catch (err) {
+                document.getElementById('responseMessage').textContent = "Error: " + err.message;
+                document.getElementById('medicineDetails').style.display = 'none';
+            }
+        }
+
+        document.getElementById('updateForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const id = document.getElementById('medicineId').value;
+
+            const updatedData = {
+                name: document.getElementById('name').value,
+                
+                quantity: parseInt(document.getElementById('quantity').value),
+                price: parseFloat(document.getElementById('price').value)
+            };
+            
+            //description: document.getElementById('description').value,
+
+            try {
+                const res = await fetch(`/api/medicine/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updatedData)
+                });
+
+                if (res.ok) {
+                    document.getElementById('responseMessage').textContent = "Medicine updated successfully!";
+                } else {
+                    const error = await res.text();
+                    document.getElementById('responseMessage').textContent = "Update failed: " + error;
+                }
+            } catch (err) {
+                document.getElementById('responseMessage').textContent = "Error: " + err.message;
+            }
+        });
+    </script>
+</body>
+</html>

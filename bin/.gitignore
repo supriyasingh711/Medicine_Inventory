@@ -1,5 +1,11 @@
 HELP.md
 /src/main/resources/application.properties
+bin/.gitattributes
+bin/.mvn/
+bin/mvnw
+bin/mvnw.cmd
+bin/src/test/
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -13,6 +19,7 @@ target/
 .settings
 .springBeans
 .sts4-cache
+.class
 
 ### IntelliJ IDEA ###
 .idea
@@ -32,4 +39,3 @@ build/
 
 ### VS Code ###
 .vscode/
-/bin/

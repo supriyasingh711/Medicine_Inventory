@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Medicine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 15px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Add Medicine</h2>
+    <form id="medicineForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+		<!-- 
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4"></textarea>
+         -->
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" required min="0">
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" required step="0.01" min="0">
+
+        <button type="submit">Add Medicine</button>
+    </form>
+
+    <p id="responseMessage"></p>
+
+    <script>
+        document.getElementById('medicineForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const medicineData = {
+                name: document.getElementById('name').value,
+                
+                quantity: parseInt(document.getElementById('quantity').value),
+                price: parseFloat(document.getElementById('price').value)
+            };
+            
+            //description: document.getElementById('description').value,
+
+            try {
+                const response = await fetch('/api/medicine', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(medicineData)
+                });
+
+                if (response.ok) {
+                    document.getElementById('responseMessage').textContent = "Medicine added successfully!";
+                    document.getElementById('medicineForm').reset();
+                } else {
+                    document.getElementById('responseMessage').textContent = "Failed to add medicine.";
+                }
+            } catch (error) {
+                document.getElementById('responseMessage').textContent = "Error: " + error.message;
+            }
+        });
+    </script>
+</body>
+</html>

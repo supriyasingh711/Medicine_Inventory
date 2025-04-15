@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Medicine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+        }
+        label, p {
+            margin-top: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 15px;
+        }
+        #medicineDetails {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            display: none;
+        }
+        #responseMessage {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Delete Medicine</h2>
+
+    <label for="medicineId">Enter Medicine ID to Delete:</label>
+    <input type="number" id="medicineId" required>
+    <button onclick="fetchMedicine()">Fetch Medicine</button>
+
+    <div id="medicineDetails">
+        <h3>Medicine Details</h3>
+        <p><strong>ID:</strong> <span id="idDisplay"></span></p>
+        <p><strong>Name:</strong> <span id="nameDisplay"></span></p>
+        <!-- <p><strong>Description:</strong> <span id="descDisplay"></span></p> -->
+        <p><strong>Quantity:</strong> <span id="qtyDisplay"></span></p>
+        <p><strong>Price:</strong> <span id="priceDisplay"></span></p>
+        <button onclick="deleteMedicine()">Delete Medicine</button>
+    </div>
+
+    <p id="responseMessage"></p>
+
+    <script>
+        async function fetchMedicine() {
+            const id = document.getElementById('medicineId').value;
+            if (!id) {
+                alert("Please enter a valid ID.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/medicine/${id}`);
+                if (!response.ok) {
+                    throw new Error("Medicine not found.");
+                }
+
+                const medicine = await response.json();
+                document.getElementById('idDisplay').textContent = medicine.id;
+                document.getElementById('nameDisplay').textContent = medicine.name;
+                //document.getElementById('descDisplay').textContent = medicine.description || "N/A";
+                document.getElementById('qtyDisplay').textContent = medicine.quantity;
+                document.getElementById('priceDisplay').textContent = medicine.price.toFixed(2);
+
+                document.getElementById('medicineDetails').style.display = 'block';
+                document.getElementById('responseMessage').textContent = '';
+            } catch (err) {
+                document.getElementById('responseMessage').textContent = "Error: " + err.message;
+                document.getElementById('medicineDetails').style.display = 'none';
+            }
+        }
+
+        async function deleteMedicine() {
+            const id = document.getElementById('medicineId').value;
+
+            if (!confirm("Are you sure you want to delete this medicine?")) return;
+
+            try {
+                const response = await fetch(`/api/medicine/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    document.getElementById('responseMessage').textContent = "Medicine deleted successfully.";
+                    document.getElementById('medicineDetails').style.display = 'none';
+                    document.getElementById('medicineId').value = '';
+                } else {
+                    document.getElementById('responseMessage').textContent = "Failed to delete medicine.";
+                }
+            } catch (err) {
+                document.getElementById('responseMessage').textContent = "Error: " + err.message;
+            }
+        }
+    </script>
+</body>
+</html>
