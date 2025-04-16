@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,11 +47,17 @@
     <p>Welcome to the Medicine Inventory Management System. Choose an option below to proceed.</p>
 
     <div class="nav-buttons">
-        <a href="addMedicine.html">Add Medicine</a>
-        <a href="../static/viewAllMedicines.html">View All Medicines</a>
-        <a href="updateMedicine.html">Update Medicine</a>
-        <a href="deleteMedicine.html">Delete Medicine</a>
+        <a href="addMedicine.html" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_PHARMACIST')">Add Medicine</a>
+        <a href="viewAllMedicines.html" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_STAFF','ROLE_PHARMACIST')">View All Medicines</a>
+        <a href="updateMedicine.html" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_PHARMACIST')">Update Medicine</a>
+        <a href="deleteMedicine.html"sec:authorize="hasRole('ROLE_ADMIN')" >Delete Medicine</a>
     </div>
+</div>
+<div>
+    <p sec:authorize="isAuthenticated()">
+        Logged in as: <strong sec:authentication="name"></strong><br>
+        Roles: <strong sec:authentication="authorities"></strong>
+    </p>
 </div>
 
 </body>

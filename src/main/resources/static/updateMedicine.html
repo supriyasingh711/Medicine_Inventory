@@ -57,6 +57,10 @@
             <label for="price">Price:</label>
             <input type="number" id="price" required step="0.01" min="0">
 
+            <label for="expiryDate">expiry Date:</label>
+            <input type="text" id="expiryDate" required >
+
+
             <button type="submit">Update Medicine</button>
         </form>
     </div>
@@ -84,6 +88,7 @@
                 //document.getElementById('description').value = medicine.description || '';
                 document.getElementById('quantity').value = medicine.quantity;
                 document.getElementById('price').value = medicine.price;
+                document.getElementById('expiryDate').value = medicine.expiryDate;
 
                 document.getElementById('medicineDetails').style.display = 'block';
                 document.getElementById('responseMessage').textContent = '';
@@ -102,7 +107,8 @@
                 name: document.getElementById('name').value,
                 
                 quantity: parseInt(document.getElementById('quantity').value),
-                price: parseFloat(document.getElementById('price').value)
+                price: parseFloat(document.getElementById('price').value),
+                expiryDate: document.getElementById('expiryDate').value,
             };
             
             //description: document.getElementById('description').value,

@@ -35,8 +35,7 @@ public class Medicine {
 
     private int minThreshold=5;
 
-    public Medicine() {
-    }
+
 
     @Column(name="batch_number")
     @JsonProperty

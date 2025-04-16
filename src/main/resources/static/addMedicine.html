@@ -31,16 +31,15 @@
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required>
 
-		<!-- 
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" rows="4"></textarea>
-         -->
-
         <label for="quantity">Quantity:</label>
         <input type="number" id="quantity" name="quantity" required min="0">
 
         <label for="price">Price:</label>
         <input type="number" id="price" name="price" required step="0.01" min="0">
+        <label for="batchNumber">batchNumber:</label>
+        <input type="text" id="batchNumber" name="price" required step="0.01" min="0">
+        <label for="expiryDate">expiryDate:</label>
+        <input type="text" id="expiryDate" name="price" required step="0.01" min="0">
 
         <button type="submit">Add Medicine</button>
     </form>
@@ -53,16 +52,17 @@
 
             const medicineData = {
                 name: document.getElementById('name').value,
-                
                 quantity: parseInt(document.getElementById('quantity').value),
-                price: parseFloat(document.getElementById('price').value)
+                price: parseFloat(document.getElementById('price').value),
+                batchNumber:document.getElementById('batchNumber').value,
+                expiryDate:document.getElementById('expiryDate').value
+
             };
-            
-            //description: document.getElementById('description').value,
 
             try {
                 const response = await fetch('/api/medicine', {
                     method: 'POST',
+                    credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json'
                     },
