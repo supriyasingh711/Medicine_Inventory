@@ -44,6 +44,7 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Batch No.</th>
                 <!-- <th>Description</th> -->
                 <th>Quantity</th>
                 <th>Price</th>
@@ -78,7 +79,7 @@
                         row.innerHTML = `
                             <td>${medicine.id}</td>
                             <td>${medicine.name}</td>
-                            
+                            <td>${medicine.batchNumber}</td>                            
                             <td>${medicine.quantity}</td>
                             <td>${medicine.price.toFixed(2)}</td>
                         `;
