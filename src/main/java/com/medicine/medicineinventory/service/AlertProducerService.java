@@ -15,6 +15,6 @@ public class AlertProducerService {
     private KafkaTemplate<String,String> kafkaTemplate;
 
     public void sendRestockAlert(String message){
-        kafkaTemplate.send(TOPIC,message);
+        this.kafkaTemplate.send(TOPIC,message);
     }
 }

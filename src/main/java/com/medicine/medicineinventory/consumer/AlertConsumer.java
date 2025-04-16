@@ -8,6 +8,6 @@ public class AlertConsumer {
 
     @KafkaListener(topics = "restock-alerts",groupId="Inventory-alert-group")
     public void listen(String message){
-        System.out.println("Received kafka alert"+message);
+        System.out.println("Received kafka alert: "+message);
     }
 }
