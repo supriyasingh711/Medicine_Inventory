@@ -14,6 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AlertController {
     @Autowired
     private AlertProducerService alertProducerService;
+    
+	    @GetMapping
+	    public String sendDummyAlert(){
+	        alertProducerService.sendRestockAlert("dummy");
+	        return "Alert send to kafka : dummy";
+	    }
 
         @GetMapping
         public String sendAlert(){
