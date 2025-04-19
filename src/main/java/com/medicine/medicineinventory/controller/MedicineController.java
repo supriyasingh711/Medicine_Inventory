@@ -3,6 +3,7 @@ package com.medicine.medicineinventory.controller;
 
 import com.medicine.medicineinventory.dto.UpdateMedicineRequest;
 import com.medicine.medicineinventory.entity.Medicine;
+import com.medicine.medicineinventory.service.AlertProducerService;
 import com.medicine.medicineinventory.service.MedicineService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -18,6 +21,9 @@ import java.util.Optional;
 public class MedicineController {
     @Autowired
     public MedicineService medicineService;
+
+    @Autowired
+    public AlertProducerService alertProducerService;
 
     @GetMapping("/")
     public String showHome(){
@@ -49,6 +55,8 @@ public class MedicineController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateMedicine(@PathVariable Long id, @Valid @RequestBody UpdateMedicineRequest request){
         Medicine updatedMedicine= medicineService.updateMedicine(id,request);
+        alertProducerService.updateStock(id,updatedMedicine.getQuantity());
+
         return  ResponseEntity.ok(updatedMedicine);
     }
 }

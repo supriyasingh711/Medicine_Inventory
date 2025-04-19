@@ -50,6 +50,7 @@
         <a href="addMedicine.html" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_PHARMACIST')">Add Medicine</a>
         <a href="viewAllMedicines.html" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_STAFF','ROLE_PHARMACIST')">View All Medicines</a>
         <a href="updateMedicine.html" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_PHARMACIST')">Update Medicine</a>
+        <a href="restockMedicine.html" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_PHARMACIST')">Restock Medicine</a>
         <a href="deleteMedicine.html"sec:authorize="hasRole('ROLE_ADMIN')" >Delete Medicine</a>
     </div>
 </div>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Restock Medicine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 15px;
+        }
+        #medicineDetails {
+            display: none;
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+            padding-top: 15px;
+        }
+        #responseMessage {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+<h2>Restock Medicine</h2>
+
+
+<div id="medicineDetails"><form th:action="@{/restock/suggestions}" method="post">
+    <label for="stockSize">Enter available stock space:</label>
+    <input type="number" id="stockSize" name="stockSize" required>
+    <button type="submit">Get Suggestions</button>
+</form>
+</div>
+
+<p id="responseMessage"></p>
+
+
+</body>
+</html>

@@ -21,7 +21,6 @@ public class KafkaConfig {
                 ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class,
                 ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,StringSerializer.class
         ));
-
     }
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate(){

@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class AlertConsumer {
 
-    @KafkaListener(topics = "restock-alerts",groupId="Inventory-alert-group")
+    @KafkaListener(topics = "restock-alerts",groupId = "alert-consumer-group")
     public void listen(String message){
-        System.out.println("Received kafka alert"+message);
+        System.out.println("Received kafka alert Consumer"+message);
     }
 }

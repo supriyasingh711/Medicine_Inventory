@@ -22,7 +22,6 @@ public class UpdateMedicineRequest {
     @DecimalMin(value = "0.0",inclusive = false,message = "Price must be greater than zero")
     private double price;
 
-    private String batchNumber;
 
     public String getBatchNumber() {
         return batchNumber;
@@ -42,13 +41,6 @@ public class UpdateMedicineRequest {
         this.name = name;
     }
 
-    public  String getBatchNumber() {
-        return batchNumber;
-    }
-
-    public void setBatchNumber(String batchNumber) {
-        this.batchNumber = batchNumber;
-    }
 
     public int getQuantity() {
         return quantity;
